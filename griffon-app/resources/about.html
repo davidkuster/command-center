@@ -1,0 +1,43 @@
+<html>
+<body>
+
+<!-- TODO: Build #xxxx -->
+
+
+This tool is still very much a work in progress but I hope you find it useful.  I intend to open source the code on Github (or somewhere similar) for future extension and customization.  The app is written in Griffon (v1.0.0) so it should be fairly straightforward for Grails developers to understand and modify.
+
+<p>
+	In the meantime, feel free to let me know about any problems you encounter or ideas for future extension.
+</p>
+
+<p>
+	David Kuster <br>
+	dave@djtalldave.com <br>
+	@ofTallDaveFame
+</p>
+
+<p><br><b>Future direction / TODOs</b></p>
+
+<p>- potentially let each button accept multiple commands to be executed, so clean/compile/run (for example) could be done with a single click.</p>
+
+<p>- implement a tabbed interface so multiple projects can be open at once, or multiple commands can be run against the same project simultaneously.  (for instance, keeping run-app going while running unit tests in a different tab.)</p>
+
+<p>- potentially let buttons accept input parameters.  thus, buttons like 'create-domain-class com.package.%1' become possible, and other uses for this tool become more feasible.  (such as a wrapper around git commands.)</p>
+
+<p>- add option to pause automatic scrolling of console output.</p>
+
+<p>- use something smarter than a text area for the console window (ie. JTextPane/JEditorPane/some kind of code editor/etc) to allow for highlighting of output, additional font styling, etc.  additionally allow the user to configure keywords/phrases to be highlighted and colors for each.</p>
+
+<p>- potentially integrate with Grails' interactive mode so the JVM is only spun up once and kept running in between commands for faster execution of subsequent commands.</p>
+
+<p>- user-configurable shortcuts for the command buttons.</p>
+
+<p>- extend Jide SearchableBar/Searchable to indicate how many instances of searched text were found, at least when using highlight all checkbox.</p>
+<!-- 
+https://github.com/jidesoft/jide-oss/blob/master/src/com/jidesoft/swing/Searchable.java - add counter to while loop in highlightAll() method
+-->
+
+<br>
+
+</body>
+</html>

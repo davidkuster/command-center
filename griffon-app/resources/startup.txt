@@ -1,0 +1,17 @@
+Welcome to the Grails Command Center utility!  The intent is to make Grails development more productive and enjoyable by enhancing interaction with the command line.
+
+Quick tutorial:
+The command buttons above can be edited or deleted with a right-click, and the '*' button will create new buttons.  Commands can also be entered directly in the above combo box and executed by pressing enter.  To get started, set the Grails project directory using the Project menu.
+
+Useful Shortcuts:
+Ctrl/Cmd-F - search console output
+Ctrl/Cmd-W - clear console output
+Ctrl/Cmd-Q - stop current process
+
+More info and future direction can be found in the Help menu.  Hope you enjoy!
+
+David Kuster
+dave@djtalldave.com
+@ofTallDaveFame
+
+(Ctrl/Cmd-W will clear this message - it can be turned off in Preferences -> Project Options.)
