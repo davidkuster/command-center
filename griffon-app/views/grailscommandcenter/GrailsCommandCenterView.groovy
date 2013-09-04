@@ -2,6 +2,7 @@ package grailscommandcenter
 
 import javax.swing.*
 import java.awt.*
+import java.awt.event.KeyEvent
 
 
 // UI helpers
@@ -24,14 +25,6 @@ commandCenterWindow = application(
 {
     // menu bar
     widget(build(MenuBar))
-
-    // bind escape key to clear console output
-    /*keyStrokeAction(
-        component:current.contentPane,
-        //keyStroke:shortcut('ESCAPE'),
-        keyStroke:KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, KeyEvent.CTRL_DOWN_MASK),
-        action:menuClearConsoleAction )*/
-    // TODO: figure out how to make this work
 
     // TODO: look into making UI tabbed so multiple projects can be open at once
     //tabbedPane( id:'tab', constraints:CENTER )
@@ -68,6 +61,12 @@ commandCenterWindow = application(
         }
     }
 
+    // bind escape key to clear console event
+    keyStrokeAction(
+        component: current.contentPane,
+        keyStroke: 'ESCAPE',
+        condition: 'in focused window',
+        action: menuClearConsoleAction )
 }
 
 
@@ -85,6 +84,19 @@ saveProjectDialog.setDirectory( "." );
 projectDirectoryChooser = fileChooser()
 projectDirectoryChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY )
 projectDirectoryChooser.setCurrentDirectory( new File(".") );
+
+
+/*noparent {
+    app.views.console.consoleTextArea.addKeyListener( {
+            def keyPressed = { KeyEvent e ->
+                // bind escape key to clear console event
+                println "in key listener: $e"
+                if ( e.keyCode == KeyEvent.VK_ESCAPE ) {
+                    app.serviceManager.findService('eventPublishService').clearConsole()
+                }
+            }
+        } as KeyListener )
+}*/
 
 
 return commandCenterWindow
