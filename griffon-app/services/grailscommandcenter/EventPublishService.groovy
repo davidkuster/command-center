@@ -8,6 +8,10 @@ package grailscommandcenter
  */
 class EventPublishService {
 
+    // all these events are called synchronously.
+    // TODO: figure out which if any should be asynchronously via app.eventAsync()
+
+
 	/**** process events ****/
 
     def executeCommand( command, actionButton, buttonMvcId ) {

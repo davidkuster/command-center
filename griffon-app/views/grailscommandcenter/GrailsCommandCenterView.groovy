@@ -86,17 +86,19 @@ projectDirectoryChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY )
 projectDirectoryChooser.setCurrentDirectory( new File(".") );
 
 
-/*noparent {
-    app.views.console.consoleTextArea.addKeyListener( {
-            def keyPressed = { KeyEvent e ->
-                // bind escape key to clear console event
-                println "in key listener: $e"
+noparent {
+    // when text area is focused the app level escape key binding isn't getting picked up.
+    // TODO: figure out why this is happening and only have the escape key bound once
+    app.views.console.consoleTextArea.addKeyListener( [
+            keyPressed: { KeyEvent e ->
                 if ( e.keyCode == KeyEvent.VK_ESCAPE ) {
                     app.serviceManager.findService('eventPublishService').clearConsole()
                 }
-            }
-        } as KeyListener )
-}*/
+            },
+            keyReleased: { KeyEvent e -> },
+            keyTyped: { KeyEvent e -> } ]
+        as KeyListener )
+}
 
 
 return commandCenterWindow
