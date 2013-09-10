@@ -14,6 +14,9 @@ class ConsolePanelController {
     // clipboard for copy (no paste)
     Clipboard clipboard = Toolkit.defaultToolkit.systemClipboard
 
+    // write to console when newline chars or ? are encountered
+    static def consoleWriteRegex = /\n|\r|\?/
+
 
 
     // startup
@@ -70,10 +73,9 @@ class ConsolePanelController {
     private def consoleWrite( String s ) {
         currentLine += s
 
-        // only write to console when a newline char exists
-        if ( currentLine.contains('\n') || currentLine.contains('\r')
-            // or a question is being asked, perhaps requiring user input...
-            || currentLine.contains('?') ) {
+        // only write to console when line contains certain chars
+        // (instead of updating UI on every char)
+        if ( currentLine =~ consoleWriteRegex ) {
 
             if ( app.models.grailsCommandCenter.consoleSmartOutput ) {
                 // TODO: move this to ConsolePanelModel
