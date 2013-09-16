@@ -18,6 +18,9 @@ class ProcessController {
     //def commandPrefix
     //def projectDirectory
 
+    // used to interrupt console writing when stop process event is received
+    static boolean writeOutputToConsole = true
+
 
 
     void mvcGroupInit(Map args) {
@@ -35,6 +38,9 @@ class ProcessController {
 
 
     def onStopProcess = { evt = null ->
+        // interrupt console writing
+        writeOutputToConsole = false
+
         if ( model.process ) {
             eventPublishService.consoleWrite( "\nstopping process..." )
             def terminateResult = processHelper.terminate( model.process )
@@ -52,14 +58,14 @@ class ProcessController {
             model.currentCommand = ''
         }
     }
-    
+
 
     /**** common execute command action ****/
 
-    // could also be a closure: 
+    // could also be a closure:
     // def onExecuteCommand = { actionButton, command ->
 
-    def onExecuteCommand( command, actionButton, buttonMvcId ) { 
+    def onExecuteCommand( command, actionButton, buttonMvcId ) {
         // TODO: think about a better way to do this - probably set commandPrefix & projectDirectory on the process model & have that updated by the parent controller when the configuration is reloaded - most likely via an event...
         def osCommandPrefix = app.models.grailsCommandCenter.osCommandPrefix
         def commandPrefix = app.models.grailsCommandCenter.commandPrefix
@@ -87,6 +93,9 @@ class ProcessController {
         model.setStatus( model.RUNNING )
         model.currentCommand = command
 
+        // ensure this var is reset to true before every command execution
+        writeOutputToConsole = true
+
         doOutside {
 
             // timing info
@@ -110,7 +119,7 @@ class ProcessController {
                 // TODO: look at using groovy.ui.SystemOutputInterceptor
 
                 int i=0;
-                while ((i=is?.read()) != -1) {
+                while ((i=is?.read()) != -1 && writeOutputToConsole ) {
                     //app.event( 'consoleWrite', [((char) i).toString()] )
                     app.controllers.console.consoleWrite( ((char) i).toString() )
                     // bypassing event approach here - we don't need an event on every char
@@ -132,7 +141,7 @@ class ProcessController {
             catch (InterruptedException e) {
                 eventPublishService.consoleWriteln( "\nInterruptedException: ${e.message}" )
                 e.printStackTrace()
-            } 
+            }
             catch ( t ) {
                 eventPublishService.consoleWriteln( "\nUnexpected Exception: ${t}" )
                 t.printStackTrace()
@@ -143,7 +152,7 @@ class ProcessController {
 
                 edt {
                     // model updates
-                    if ( model.status != model.STOPPED ) 
+                    if ( model.status != model.STOPPED )
                         model.setStatus( model.COMPLETE )
                     model.currentCommand = ''
                     model.pid = ''
