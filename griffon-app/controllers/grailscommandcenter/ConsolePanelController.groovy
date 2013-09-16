@@ -132,7 +132,8 @@ class ConsolePanelController {
 
 
     private void addToOutput( s ) {
-        def maxSize = app.models.grailsCommandCenter.consoleMaxSize as int
+        def maxSize = app.models.grailsCommandCenter.consoleMaxSize
+        maxSize = maxSize ? maxSize as Integer : 0
         // TODO: move this setting to ConsolePanelModel
 
         // if max length is not set to 0 then limit output

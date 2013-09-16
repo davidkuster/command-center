@@ -7,11 +7,11 @@ class GrailsCommandCenterModel {
 
 	def eventPublishService
 
-	
+
 	@Bindable String windowTitle = 'Command Center'
 	//@Bindable String promptText = "grails"
 	// TODO: use prompt text instead of binding directly to commandPrefix...
-	
+
 	@Bindable String commandPrefix
 
 	def userButtons
@@ -33,7 +33,7 @@ class GrailsCommandCenterModel {
 
 
 	/**
-	 * called by controller on startup.  
+	 * called by controller on startup.
 	 *
 	 * loads remembered internal config (button configuration, window size/position, etc)
 	 * from a hidden file stored in the user's home directory.  loads that as the project
@@ -63,7 +63,7 @@ class GrailsCommandCenterModel {
 
 		// config options
 		consoleSmartOutput = config['console-smart-output']
-		consoleMaxSize = config['console-max-size'] as Long ?: 0
+		consoleMaxSize = config['console-max-size'] ? config['console-max-size'] as Integer : 0
 		consoleShowCommandStartAndEnd = config['console-show-command-info']
 		consoleShowWelcomeMessage = config['console-show-welcome-msg']
     }
@@ -150,7 +150,7 @@ class GrailsCommandCenterModel {
     private Map createProjectConfigMap() {
     	def buttons = []
 		app.models.each { k, v ->
-    		if ( k.startsWith('buttons') ) 
+    		if ( k.startsWith('buttons') )
 				buttons << ['name':v.buttonName, 'command':v.command]
 		}
 		def projectDir = "${projectDirectory}".replace('\\','/')
